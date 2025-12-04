@@ -12,7 +12,7 @@ void *thread_a(void *arg) {
   for (int i = 0; i < 5; i++) {
     pthread_mutex_lock(&mutex);
     tick(time_cnt);
-    while (turn != 0) {
+    while (turn) {
       printf("A: sleep  (i=%d)(time=%d)\n", i, time_cnt);
       pthread_cond_wait(&cond, &mutex);
     }
@@ -31,7 +31,7 @@ void *thread_b(void *arg) {
   for (int i = 0; i < 5; i++) {
     pthread_mutex_lock(&mutex);
     tick(time_cnt);
-    while (turn != 1) {
+    while (!turn) {
       printf("B: sleep  (i=%d)(time=%d)\n", i, time_cnt);
       pthread_cond_wait(&cond, &mutex);
     }
